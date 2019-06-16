@@ -8,6 +8,7 @@ import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import nicolas.bahamon.bydrec.R
 import rx.Observable
 import rx.Observer
 
@@ -37,21 +38,17 @@ class SingletonApiServices: Application() {
     fun makeGteCall(contect: Context, pathUrl: String, mySubscriber: Observer<String>){//debe llegar un lisener
 
         val queue = Volley.newRequestQueue(contect)
-        val finalUrl = URL+pathUrl
+        var finalUrl = URL
+
+        if(pathUrl.equals(getString(R.string.ressults)))
+            finalUrl = URL2
 
         // Request a string response from the provided URL.
         val stringReq = StringRequest(Request.Method.GET, finalUrl,
             Response.Listener<String> { response ->
 
                 var strResp = response.toString()
-                /* val jsonObj: JSONObject = JSONObject(strResp)
-                 val jsonArray: JSONArray = jsonObj.getJSONArray("items")
-                 var str_user: String = ""
-                 for (i in 0 until jsonArray.length()) {
-                     var jsonInner: JSONObject = jsonArray.getJSONObject(i)
-                     str_user = str_user + "\n" + jsonInner.get("login")
-                 }*/
-                // enviar por lisener a la vista superior
+
                 //RXJAVA
                 var obs = Observable.create<String> { emitter ->
                     emitter.onNext(strResp)

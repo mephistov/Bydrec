@@ -13,6 +13,7 @@ public class Item {
     public Team awwayTeam;
     public Score score;
     public Venue venue;
+    public CompetitionStage competition_stage;
 
     Item(JSONObject jsonRespons){
 
@@ -22,6 +23,8 @@ public class Item {
             homeTeam = new Team(jsonRespons.getJSONObject("homeTeam"));
             awwayTeam = new Team(jsonRespons.getJSONObject("awayTeam"));
             date = jsonRespons.getString("date");
+
+            competition_stage = new CompetitionStage(jsonRespons.getJSONObject("competitionStage"));
 
             state = jsonRespons.getString("state");
             if(jsonRespons.has("score") && !jsonRespons.isNull("score"))
